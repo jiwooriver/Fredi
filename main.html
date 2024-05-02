@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <title>Crime Scene</title>
+    <!-- 부트스트랩 CSS 로드 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        .navbar {
+            padding: 20px 0; /* 네비게이션 바의 상단과 하단 패딩 설정 */
+        }
+        .navbar-nav {
+            margin-left: auto; /* 메뉴를 오른쪽으로 정렬 */
+        }
+        .navbar-brand img {
+            height: 60px; /* 로고의 높이 설정 */
+            margin-right: 10px; /* 로고와 텍스트 사이의 간격 조정 */
+        }
+        .carousel {
+            margin-top: 20px; /* 카로셀과 네비게이션 바 사이의 간격 조정 */
+            position: relative; /* 상대 위치 설정 */
+        }
+        .carousel-item img {
+            max-height: 700px; /* 카로셀 이미지의 최대 높이 설정 */
+            width: auto; /* 이미지 너비 자동 조정 */
+            margin: 0 auto; /* 가운데 정렬 */
+        }
+        .link-container {
+            display: flex;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .link-container a {
+            flex: 0 0 auto; /* 각 링크의 크기를 자동으로 조정 */
+            max-width: 30%; /* 최대 너비 설정 */
+        }
+        .link-container img {
+            width: 100%;
+            height: auto;
+            cursor: pointer; /* 포인터 커서를 표시하여 클릭 가능함을 나타냄 */
+            max-height: 100%; /* 이미지가 너무 크면 부모 요소에 맞게 조정 */
+            object-fit: cover; /* 이미지 비율을 유지하면서 부모 요소에 맞게 조정 */
+        }
+        .menu-buttons {
+            position: absolute;
+            bottom: 20px; /* 아래쪽 위치 설정 */
+            left: 50%; /* 가운데 위치 설정 */
+            transform: translateX(-50%); /* 가로 가운데 정렬 */
+            display: flex;
+            justify-content: space-between;
+            z-index: 999; /* 다른 요소 위에 표시되도록 설정 */
+        }
+        .menu-button {
+            border: none; /* 테두리 없음 */
+            width: 150px; /* 너비 설정 */
+            height: 150px; /* 높이 설정 */
+            padding: 30px; /* 내부 여백 설정 */
+            margin: 0 100px; /* 버튼 간 간격 설정 */
+            font-size: 1.2rem; /* 버튼 텍스트 크기 설정 */
+            border-radius: 50%; /* 원형 버튼으로 만듦 */
+            color: #fff; /* 텍스트 색상 설정 */
+            display: flex; /* 아이콘과 텍스트를 가로로 정렬하기 위해 추가 */
+            flex-direction: column; /* 아이콘과 텍스트를 세로로 정렬하기 위해 추가 */
+            align-items: center; /* 아이콘과 텍스트를 수직 가운데로 정렬하기 위해 추가 */
+            justify-content: center; /* 아이콘과 텍스트를 수평 가운데로 정렬하기 위해 추가 */
+            text-align: center; /* 텍스트를 가운데 정렬하기 위해 추가 */
+        }
+        .map-button {
+            background-color: rgba(0, 0, 128, 0.5); /* 반투명 주황색 배경 */
+        }
+        .statistics-button {
+            background-color: rgba(134, 97, 29, 0.47); /* 반투명 네이비색 배경 */ 
+        }
+        .route-button {
+            background-color: rgba(135, 206, 250, 0.5); /* 반투명 하늘색 배경 */
+        }
+        .icon {
+            font-size: 3rem; /* 아이콘 크기 설정 */
+            color: #fff; /* 아이콘 색상 설정 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 네비게이션 바 -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid" style="padding-right: 50px; padding-left: 50px;"> <!-- 좌우 패딩 추가 -->
+            <a class="navbar-brand" href="#">
+                <img src="image/logo.png" alt="Crime Scene 로고">
+                Crime Scene
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto"> <!-- ms-auto를 사용하여 메뉴를 오른쪽으로 정렬 -->
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" href="#">소통하기</a>
+                    <a class="nav-link" href="#">공지사항</a>
+                    <a class="nav-link" href="#">경찰서 찾기</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 카로셀 -->
+    <div class="carousel">
+        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="image/visual.jpg" class="d-block w-100" style="max-height: 700px;" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="image/visual1.jpg" class="d-block w-100" style="max-height: 700px;" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="image/visual2.jpg" class="d-block w-100" style="max-height: 700px;" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- 메뉴 버튼 -->
+        <div class="menu-buttons">
+            <button type="button" class="btn btn-light rounded-circle menu-button map-button">
+                <i class="fas fa-map-marked-alt icon"></i>
+                범죄주의구간
+            </button>
+            <button type="button" class="btn btn-light rounded-circle menu-button statistics-button">
+                <i class="fas fa-chart-bar icon"></i>
+                범죄통계표
+            </button>
+            <button type="button" class="btn btn-light rounded-circle menu-button route-button">
+                <i class="fas fa-route icon"></i>
+                길찾기
+            </button>
+        </div>
+    </div>
+
+    <!-- 링크 -->
+    <div class="link-container">
+        <!-- 첫 번째 링크 -->
+        <a href="https://www.sexoffender.go.kr/indexN.nsc">
+            <img src="image/link1.jpg" alt="성범죄자 알림 바로가기">
+        </a>
+        <!-- 두 번째 링크 -->
+        <a href="https://www.police.go.kr/index.do">
+            <img src="image/link2.jpeg" alt="경찰청 바로가기">
+        </a>
+        <!-- 세 번째 링크 -->
+        <a href="https://www.epeople.go.kr/index.jsp">
+            <img src="image/link4.jpg" alt="국민 신문고 바로가기">
+        </a>
+    </div>
+</div>
+
+<!-- 부트스트랩 JS 로드 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
